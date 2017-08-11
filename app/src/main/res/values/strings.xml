@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">UTEQ</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Configuraciones</string>
+
+    <string name="historia">La Universidad Técnica Estatal de Quevedo inició sus actividades el 22 de enero de 1976 como una Extensión de la Universidad “Luis Vargas Torres” de Esmeraldas, abriendo sus puertas a la ciencia y al conocimiento con las carreras de Ingeniería Forestal e Ingeniería Zootécnica.
+
+\n\n
+Después de múltiples gestiones realizadas por la comunidad quevedeña, el Congreso Nacional finalmente creó la Universidad Técnica Estatal de Quevedo – UTEQ, mediante la Ley de la República del 26 de enero de 1984, publicada en el Registro Oficial No. 674 del 1 de Febrero de 1984.
+\n\n
+
+Esta institución de educación superior inicia sus labores como UTEQ con la Facultad de Ciencias Agropecuarias, posteriormente ésta fue denominada Facultad de Ciencias Agrarias (FCA). Luego se crearon las Facultades de Ciencias Pecuarias (FCP), Ciencias Empresariales (FCE), Ciencias Ambientales (FCAMB), Ciencias de la Ingeniería (FCI), y la Unidad de Estudios a Distancia (UED), con carreras acordes a las exigencias del medio y la demanda estudiantil.
+\n\n
+
+La universidad cuenta además con la Unidad de Posgrado en la que se llevan a cabo programas de Maestrías reconocidas y aprobadas por el Consejo de Educación Superior (CES) y contribuyen al fortalecimiento de una cultura de posgrado que atienda las necesidades de formación de educación avanzada de la población profesional institucional, local, regional y nacional.
+\n\n
+
+Actualmente la UTEQ es una universidad pionera en la formación de profesionales, prestos al servicio de nuestro país, lideres, competitivos, de pensamientos críticos y con valores humanos, comprometido en el desarrollo de una sociedad justa, equitativa y solidaria, para contribuir al mejoramiento de la calidad de vida e impulsar el desarrollo sostenido y sustentable del Ecuador.
+\n\n
+
+La Universidad Técnica Estatal de Quevedo es una universidad acreditada por el Consejo de Evaluación, Acreditación y Aseguramiento de la Calidad de la Eduacación Superior y se encuentra posicionada en la Categoría B.</string>
+
+    <string name="visio_mision">
+        <h3>Visión 2020</h3>
+\n\n
+Ser una institución modelo en sostenibilidad universitaria con impacto nacional y responsabilidad social.
+\n\n
+<h3>Misión</h3>
+\n\n
+Formar profesionales y académicos competitivos y de excelencia; generando conocimiento, tecnología; servicios de calidad soluciones a los problemas de la sociedad; sustentada en principios y valores éticos.
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
