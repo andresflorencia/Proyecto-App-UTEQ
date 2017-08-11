@@ -17,6 +17,7 @@ public class Noticias {
     private String categoria;
     private String path;
     private String idCategoria;
+    private String unidad;
 
     //private String URL;
 
@@ -34,6 +35,7 @@ public class Noticias {
        // categoria=a.getString("categoria");
         path=a.getString("url");
         idCategoria=a.getString("categoria_id");
+        //unidad=a.getString("unidad");
 
     }
 
@@ -50,6 +52,8 @@ public class Noticias {
     public String getPath() {return path;}
 
     public String getIdCategoria() {return idCategoria;}
+
+    public String getUnidad() {return unidad;}
 
     public static  ArrayList<Noticias> JsonObjectsBuild(JSONArray datos)
             throws JSONException {

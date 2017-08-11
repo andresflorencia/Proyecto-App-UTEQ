@@ -9,6 +9,8 @@ import android.text.method.LinkMovementMethod;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 import com.example.andres_dell.uteqdemo.R;
 import com.example.andres_dell.uteqdemo.WebServ.Asynchtask;
 import com.example.andres_dell.uteqdemo.WebServ.WebService;
@@ -22,6 +24,7 @@ import java.util.Map;
 
 public class Archivos extends AppCompatActivity implements Asynchtask{
 
+    Validaciones validaciones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +40,10 @@ public class Archivos extends AppCompatActivity implements Asynchtask{
         txttituloNoticia.setText(bundle.getString("TituloCategoria"));
 
 
+        String ip= Validaciones.ipAConetarse(this);
         Map<String, String> params = new HashMap<String, String>();
         params.put("idcategoria", bundle.get("idCategoria").toString());
-        WebService ws= new WebService("http://186.46.90.102/appUTEQ/ws/info.php", params, Archivos.this, Archivos.this);
+        WebService ws= new WebService("http://"+ip+"/appUTEQ/ws/info.php", params, Archivos.this, Archivos.this);
         ws.execute("");
     }
 

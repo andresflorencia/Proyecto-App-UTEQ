@@ -4,7 +4,6 @@ package com.example.andres_dell.uteqdemo;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.example.andres_dell.uteqdemo.R;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +22,7 @@ public class ConsultaNotasSicau extends Fragment {
 
     Validaciones objValidaciones=new Validaciones();
     WebView webview;
-
+    Constante objConstante=new Constante();
 
 
     @Override
@@ -35,7 +35,7 @@ public class ConsultaNotasSicau extends Fragment {
         //uso del metodo de verificacion de conexion a internet
         if (!objValidaciones.verificaConexion(view.getContext())) {
             Toast.makeText(view.getContext(),
-                    "Comprueba tu conexión a Internet", Toast.LENGTH_LONG)
+                    objConstante.getMensajeSinConexion(), Toast.LENGTH_LONG)
                     .show();
             //this.finish();
             // fin de "uso del metodo de verificacion de conexion a internet"
@@ -62,7 +62,7 @@ public class ConsultaNotasSicau extends Fragment {
             webview.getSettings().setAppCacheEnabled(true);
             webview.getSettings().setBuiltInZoomControls(true);
 
-            webview.loadUrl("http://sicau.uteq.edu.ec/portal/estudiantes/notas/home.faces");
+            webview.loadUrl(objConstante.getUrlConsultaNotas());
             webview.setWebViewClient(new WebViewClient(){
                 // android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
                 //android:configChanges="keyboard|keyboardHidden|orientation|screenSize">

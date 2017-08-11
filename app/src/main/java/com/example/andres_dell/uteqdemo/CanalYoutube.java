@@ -4,7 +4,6 @@ package com.example.andres_dell.uteqdemo;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.example.andres_dell.uteqdemo.R;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CanalYotube extends Fragment {
+public class CanalYoutube extends Fragment {
 
     Validaciones objValidaciones=new Validaciones();
     WebView webview;
 
+    Constante objConstante=new Constante();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +64,8 @@ public class CanalYotube extends Fragment {
             webview.getSettings().setAppCacheEnabled(true);
             webview.getSettings().setBuiltInZoomControls(true);
 
-            webview.loadUrl("https://www.youtube.com/user/UTEQCHANNEL/videos");
+
+            webview.loadUrl(objConstante.getUrlCanalYoutube());
             webview.setWebViewClient(new WebViewClient(){
                 // android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
                 //android:configChanges="keyboard|keyboardHidden|orientation|screenSize">

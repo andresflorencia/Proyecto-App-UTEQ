@@ -1,7 +1,5 @@
 package com.example.andres_dell.uteqdemo;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,9 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 import com.example.andres_dell.uteqdemo.Noticias.NoticiaAdapater;
 import com.example.andres_dell.uteqdemo.Noticias.Noticias;
 import com.example.andres_dell.uteqdemo.WebServ.Asynchtask;
@@ -33,6 +32,7 @@ public class FragmentoNoticias extends Fragment implements Asynchtask {
     LinearLayoutManager linearLayoutManager;
     //////////////////////////////////////
     Validaciones objValidaciones=new Validaciones();
+    Constante objConstante=new Constante();
     SwipeRefreshLayout swipeRefreshLayout;
     View view;
 
@@ -63,18 +63,19 @@ public class FragmentoNoticias extends Fragment implements Asynchtask {
         //uso del metodo de verificacion de conexion a internet
         if (!objValidaciones.verificaConexion(view.getContext())) {
             Toast.makeText(view.getContext(),
-                    "Comprueba tu conexión a Internet", Toast.LENGTH_LONG)
+                    objConstante.getMensajeSinConexion(), Toast.LENGTH_LONG)
                     .show();
             //this.finish();
             // fin de "uso del metodo de verificacion de conexion a internet"
         }
         else{
+            String ip=objValidaciones.ipAConetarse(view.getContext());
             if(idTipoNoticia.equals("Noticias")){
-                urlWebService="http://186.46.90.102/webservice/noticia";
+                urlWebService="http://"+ip+objConstante.getWsNoticia();
             }else if(idTipoNoticia.equals("Investigacion")){
-                urlWebService="http://186.46.90.102/webservice/noticia/investigacion";
+                urlWebService="http://"+ip+objConstante.getWsNoticiaInvestigacion();
             }else if(idTipoNoticia.equals("Vinculacion")){
-                urlWebService="http://186.46.90.102/webservice/noticia/vinculacion";
+                urlWebService="http://"+ip+objConstante.getWsNoticiaVinculacion();
             }
             Map<String, String> params = new HashMap<String,String>();
             WebService ws= new WebService(urlWebService,

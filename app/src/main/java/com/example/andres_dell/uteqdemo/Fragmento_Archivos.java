@@ -14,15 +14,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.andres_dell.uteqdemo.Archivos.Archivos;
-import com.example.andres_dell.uteqdemo.Universidad.Universidad;
-import com.example.andres_dell.uteqdemo.WebServ.WebService;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 
 
 public class Fragmento_Archivos extends Fragment {
     Validaciones objValidaciones=new Validaciones();
+    Constante objConstante=new Constante();
     private ListView lstOpciones;
     ArrayAdapter<String> adp2;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -49,7 +47,7 @@ public class Fragmento_Archivos extends Fragment {
             //uso del metodo de verificacion de conexion a internet
             if (!objValidaciones.verificaConexion(view.getContext())) {
                 Toast.makeText(view.getContext(),
-                        "Comprueba tu conexión a Internet", Toast.LENGTH_LONG)
+                        objConstante.getMensajeSinConexion(), Toast.LENGTH_LONG)
                         .show();
                 //this.finish();
                 // fin de "uso del metodo de verificacion de conexion a internet"

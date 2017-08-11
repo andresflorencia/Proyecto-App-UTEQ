@@ -1,36 +1,22 @@
 package com.example.andres_dell.uteqdemo.Universidad;
 
 import android.app.ProgressDialog;
-import android.content.res.ColorStateList;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
 import com.example.andres_dell.uteqdemo.R;
-import com.example.andres_dell.uteqdemo.Validaciones;
-import com.example.andres_dell.uteqdemo.WebServ.Asynchtask;
-import com.example.andres_dell.uteqdemo.WebServ.WebService;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.jar.Attributes;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 
 public class Universidad extends AppCompatActivity{
 
     Validaciones objValidaciones=new Validaciones();
+    Constante objConstante=new Constante();
     WebView webview;
     int pos;
     @Override
@@ -46,23 +32,7 @@ public class Universidad extends AppCompatActivity{
         actionBar.setTitle(bundle.getString("TituloCategoria"));
         String urlWebService="";
         //TextView txtContenido=(TextView)findViewById(R.id.txtContenido);
-        pos=bundle.getInt("idCategoria");
-        if(pos==0)
-        {
-            urlWebService="http://186.46.90.102/webservice/universidad/historia";
-        }
-        else if(pos==1){
-            urlWebService="http://186.46.90.102/webservice/universidad/acercade";
-        }
-        else if(pos==2){
-            urlWebService="http://186.46.90.102/webservice/universidad/autoridades";
-        }
-        else if(pos==3){
-            urlWebService="http://186.46.90.102/webservice/universidad/consejo";
-        }
-        else if(pos==4){
-            urlWebService="http://186.46.90.102/webservice/universidad/identidad";
-        }
+
 
         /*Map<String, String> params = new HashMap<String, String>();
         WebService ws= new WebService(urlWebService,params, Universidad.this, Universidad.this);
@@ -70,13 +40,31 @@ public class Universidad extends AppCompatActivity{
         //uso del metodo de verificacion de conexion a internet
         if (!objValidaciones.verificaConexion(this)) {
             Toast.makeText(this,
-                    "Comprueba tu conexión a Internet", Toast.LENGTH_LONG)
+                    objConstante.getMensajeSinConexion(), Toast.LENGTH_LONG)
                     .show();
             //this.finish();
             // fin de "uso del metodo de verificacion de conexion a internet"
         }
         else {
 
+            String ip=objValidaciones.ipAConetarse(this);
+            pos=bundle.getInt("idCategoria");
+            if(pos==0)
+            {
+                urlWebService=objConstante.getUrlHistoria();
+            }
+            else if(pos==1){
+                urlWebService=objConstante.getUrlAcercade();
+            }
+            else if(pos==2){
+                urlWebService=objConstante.getUrlAutoridades();
+            }
+            else if(pos==3){
+                urlWebService=objConstante.getUrlConsejo();
+            }
+            else if(pos==4){
+                urlWebService=objConstante.getUrlIdentidad();
+            }
 
             //Progress para los web view
             final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -98,7 +86,7 @@ public class Universidad extends AppCompatActivity{
             webview.getSettings().setAppCacheEnabled(true);
             webview.getSettings().setBuiltInZoomControls(true);
 
-            webview.loadUrl(urlWebService);
+            webview.loadUrl("http://"+ip+urlWebService);
             webview.setWebViewClient(new WebViewClient(){
                 // android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
                 //android:configChanges="keyboard|keyboardHidden|orientation|screenSize">

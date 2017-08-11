@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 import com.example.andres_dell.uteqdemo.R;
 import com.example.andres_dell.uteqdemo.WebServ.Asynchtask;
 import com.example.andres_dell.uteqdemo.WebServ.WebService;
@@ -24,6 +26,8 @@ import java.util.Map;
 
 public class verNoticia extends AppCompatActivity implements Asynchtask {
 
+    Constante objConstante=new Constante();
+    Validaciones objValidaciones=new Validaciones();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +43,13 @@ public class verNoticia extends AppCompatActivity implements Asynchtask {
 
         /*TextView txttituloNoticia = (TextView)findViewById(R.id.txtTitulo);
         txttituloNoticia.setText(bundle.getString("Titulo"));*/
-
+        String ip=objValidaciones.ipAConetarse(this);
+        String idNoticia=bundle.getString("idNoticia");
         Map<String, String> params = new HashMap<String, String>();
-        params.put("asunto","NtcPrD");
-        params.put("idnoticia",bundle.getString("idNoticia"));
-        WebService ws= new WebService("http://186.46.90.102/servicios/wsNews.php?", params, verNoticia.this, verNoticia.this);
+       // params.put("asunto","NtcPrD");
+        //params.put("idnoticia",bundle.getString("idNoticia"));
+        WebService ws= new WebService("http://"+ip+objConstante.getWsNoticiaPorId()+idNoticia
+                , params, verNoticia.this, verNoticia.this);
         ws.execute("");
 
     }
@@ -61,8 +67,8 @@ public class verNoticia extends AppCompatActivity implements Asynchtask {
         txttituloNoticia.setText(Html.fromHtml(jsonObj.getString("titulo")));
 
         TextView txtFechaCategoria = (TextView)findViewById(R.id.txtFechaCategoria);
-        txtFechaCategoria.setText(jsonObj.getString("publicacion").concat(" | ").concat(jsonObj.getString("categoria")));
-
+        //txtFechaCategoria.setText(jsonObj.getString("publicacion").substring(0,10).concat(" | ").concat(jsonObj.getString("categoria")));
+        txtFechaCategoria.setText(jsonObj.getString("publicacion").substring(0,10).concat(" | "));
         TextView txtIntroduccion = (TextView)findViewById(R.id.txtIntroduccion);
         txtIntroduccion.setText(Html.fromHtml(jsonObj.getString("intro")));
 
@@ -70,11 +76,11 @@ public class verNoticia extends AppCompatActivity implements Asynchtask {
         txtContenido.setText(Html.fromHtml(jsonObj.getString("texto")));
 
         //cargar la imagen para cada noticia
-        String URLImg="http://www.uteq.edu.ec/";
-        String idCat=jsonObj.getString("url");
+        String urlUteq=objConstante.getUrlUteq();
+        String idNoti=jsonObj.getString("url");
         ImageView imgNoticia=(ImageView)findViewById(R.id.imgNoti);
         Glide.with(this)
-                .load(URLImg.concat(idCat))
+                .load(urlUteq.concat(idNoti))
                 .crossFade()
                 .error(R.drawable.logouteqminres)
                 .into(imgNoticia);

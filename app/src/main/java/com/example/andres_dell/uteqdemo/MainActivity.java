@@ -1,13 +1,9 @@
 package com.example.andres_dell.uteqdemo;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,26 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.andres_dell.uteqdemo.Archivos.Archivos;
-import com.example.andres_dell.uteqdemo.Archivos.MainArchivo;
-import com.example.andres_dell.uteqdemo.Noticias.AdaptadorNoticias;
-import com.example.andres_dell.uteqdemo.Noticias.NoticiaAdapater;
-import com.example.andres_dell.uteqdemo.Noticias.Noticias;
-import com.example.andres_dell.uteqdemo.Noticias.verNoticia;
-import com.example.andres_dell.uteqdemo.Universidad.MainUniversidad;
-import com.example.andres_dell.uteqdemo.WebServ.Asynchtask;
-import com.example.andres_dell.uteqdemo.WebServ.WebService;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,8 +26,9 @@ public class MainActivity extends AppCompatActivity
     /////////////////////////////////////
     String idTipo="";
 
-    ///////Declaración de objeto de clase Validacion//////
+    ///////Declaración de objeto de clases Complementarias//////
     Validaciones objValidaciones=new Validaciones();
+    Constante objConstante=new Constante();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         //uso del metodo de verificacion de conexion a internet
         if (!objValidaciones.verificaConexion(this)) {
             Toast.makeText(getBaseContext(),
-                    "Comprueba tu conexión a Internet", Toast.LENGTH_LONG)
+                    objConstante.getMensajeSinConexion(), Toast.LENGTH_LONG)
                     .show();
             //this.finish();
             // fin de "uso del metodo de verificacion de conexion a internet"
@@ -142,6 +123,8 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager fragmentManager=getSupportFragmentManager();
 
+        getSupportActionBar().setTitle(item.getTitle());
+
         if (id == R.id.nav_noticias) {
             Bundle b = new Bundle();
             b.putString("idTipoNoticia","Noticias");
@@ -183,7 +166,7 @@ public class MainActivity extends AppCompatActivity
         //Intent intent = new Intent(MainActivity.this, ConsultaNotas.class);
         //startActivity(intent);
         }else if (id == R.id.nav_videosuteq) {
-            fragmentManager.beginTransaction().replace(R.id.contenedorFragmentos, new CanalYotube()).commit();
+            fragmentManager.beginTransaction().replace(R.id.contenedorFragmentos, new CanalYoutube()).commit();
             //Intent intent = new Intent(MainActivity.this, VideosUteq.class);
             //startActivity(intent);
         }

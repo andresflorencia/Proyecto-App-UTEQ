@@ -3,7 +3,6 @@ package com.example.andres_dell.uteqdemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.andres_dell.uteqdemo.R;
-import com.example.andres_dell.uteqdemo.Universidad.MainUniversidad;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 import com.example.andres_dell.uteqdemo.Universidad.Universidad;
 
 
 public class Fragmento_Universidad extends Fragment{
     Validaciones objValidaciones=new Validaciones();
+    Constante objConstante=new Constante();
     private ListView lstOpciones;
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -38,7 +38,7 @@ public class Fragmento_Universidad extends Fragment{
             //uso del metodo de verificacion de conexion a internet
             if (!objValidaciones.verificaConexion(view.getContext())) {
                 Toast.makeText(view.getContext(),
-                        "Comprueba tu conexión a Internet", Toast.LENGTH_LONG)
+                        objConstante.getMensajeSinConexion(), Toast.LENGTH_LONG)
                         .show();
                 //this.finish();
                 // fin de "uso del metodo de verificacion de conexion a internet"

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
 import com.example.andres_dell.uteqdemo.MainActivity;
 import com.example.andres_dell.uteqdemo.R;
 
@@ -28,6 +29,7 @@ public class NoticiaAdapater extends RecyclerView.Adapter<NoticiaAdapater.ViewHo
 
     Context context;
     List<Noticias> noticiasList;
+    Constante objConstante=new Constante();
 
     public NoticiaAdapater(Context context, List<Noticias> noticiasList){
         this.context=context;
@@ -51,13 +53,13 @@ public class NoticiaAdapater extends RecyclerView.Adapter<NoticiaAdapater.ViewHo
                 concat(noticiasList.get(position).getCategoria()));*/
         holder.fechaCategoria.setText(noticiasList.get(position).getFecha().concat(" | "));
         //cargar la imagen para cada noticia
-        String URLImg="http://www.uteq.edu.ec/";
-        String url=noticiasList.get(position).getPath();
+        String urlUteq=objConstante.getUrlUteq();
+        String urlImg=noticiasList.get(position).getPath();
         //String idCat=noticiasList.get(position).getIdCategoria().concat("/");
         //String idNo=noticiasList.get(position).getIdNoticia().concat(".jpg");
 
         Glide.with(this.context)
-                .load(URLImg.concat(url))
+                .load(urlUteq.concat(urlImg))
                 .crossFade()
                 .error(R.drawable.logouteqminres)
                 .into(holder.imgNoticia);
