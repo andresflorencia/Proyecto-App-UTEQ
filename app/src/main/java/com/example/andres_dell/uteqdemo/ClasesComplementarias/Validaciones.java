@@ -37,6 +37,8 @@ public class Validaciones {
     //fin de "metodo verficar conexion a internet"
 
 
+
+    //Método temporal para la validación de la red a la que está conectado el usuario
     public static String ssid(Context ctx){
         try {
             WifiManager wifiMgr = (WifiManager) ctx.getSystemService(ctx.WIFI_SERVICE);
