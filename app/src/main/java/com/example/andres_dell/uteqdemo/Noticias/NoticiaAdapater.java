@@ -1,21 +1,32 @@
 package com.example.andres_dell.uteqdemo.Noticias;
 
+import android.animation.Animator;
+import android.app.ActivityOptions;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
+import android.transition.Slide;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.ViewAnimation;
+import com.bumptech.glide.request.animation.ViewPropertyAnimation;
 import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
 import com.example.andres_dell.uteqdemo.MainActivity;
 import com.example.andres_dell.uteqdemo.R;
@@ -40,7 +51,6 @@ public class NoticiaAdapater extends RecyclerView.Adapter<NoticiaAdapater.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.ly_listanoticias,parent,false);
         ViewHolder viewHolder= new ViewHolder(itemView);
-
         return viewHolder;
     }
 
@@ -70,10 +80,29 @@ public class NoticiaAdapater extends RecyclerView.Adapter<NoticiaAdapater.ViewHo
         return noticiasList.size();
     }
 
+    @Override
+    public void onViewAttachedToWindow(ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        animateCircularReveal(holder.itemView);
+    }
+
+    ///// Animacion para los CardView a medida que se cargan o eliminan de la Vista /////
+    public void animateCircularReveal(View view){
+        int centerX=0;
+        int centerY=0;
+        int startRadius=0;
+        int endRadius=Math.max(view.getWidth(),view.getHeight());
+        Animator animation= ViewAnimationUtils.createCircularReveal(view,centerX,centerY,startRadius,endRadius);
+        view.setVisibility(View.VISIBLE);
+        animation.start();
+    }
+    /////// Fin Animacion ///////////////
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         TextView titulo, subtitulo, fechaCategoria;
         ImageView imgNoticia;
+        private FragmentManager supportFragmentManager;
 
         public ViewHolder(View item){
             super(item);
@@ -84,19 +113,26 @@ public class NoticiaAdapater extends RecyclerView.Adapter<NoticiaAdapater.ViewHo
             fechaCategoria=(TextView) item.findViewById(R.id.LblFecha);
             imgNoticia=(ImageView)item.findViewById(R.id.imgNoti);
 
+            imgNoticia.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.d("LogNoticiaAdapter", "Imagen seleccionada" + getAdapterPosition());
+                }
+            });
+
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
+
                     //Log.d("LogNoticiaAdapter","Noticia seleccionada"+getAdapterPosition());
                     Intent intent = new Intent(context, verNoticia.class);
-
                     Bundle b = new Bundle();
-                    b.putString("idNoticia",noticiasList.get(getAdapterPosition()).getIdNoticia());
+                    b.putString("idNoticia", noticiasList.get(getAdapterPosition()).getIdNoticia());
                     //b.putString("SubTitulo",((Noticias)a.getItemAtPosition(position)).getSubtitulo());
 
                     intent.putExtras(b);
-
                     context.startActivity(intent);
                 }
             });

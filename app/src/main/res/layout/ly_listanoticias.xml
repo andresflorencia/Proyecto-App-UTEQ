@@ -12,8 +12,9 @@
             <ImageView
                 android:id="@+id/imgNoti"
                 android:layout_width="100dp"
-                android:layout_height="65dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:padding="3dp"
                 android:src="@drawable/logouteqminres"/>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -17,8 +17,24 @@ import android.widget.Toast;
 import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
 import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.andres_dell.uteqdemo.WebServ.Asynchtask;
+import com.example.andres_dell.uteqdemo.WebServ.WebService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BaseSliderView.OnSliderClickListener, Asynchtask {
+
+    private SliderLayout mDemoSlider;
+    public final HashMap<String,String> url_maps=new HashMap<>();
 
     /////////////////////////////////////
     RecyclerView recyclerView;
@@ -30,12 +46,15 @@ public class MainActivity extends AppCompatActivity
     Validaciones objValidaciones=new Validaciones();
     Constante objConstante=new Constante();
 
+    public HashMap<String, String> getUrl_maps() {return url_maps;}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         /*/////////////////////////////////
         recyclerView=(RecyclerView)findViewById(R.id.rvListNoticias);
@@ -71,17 +90,34 @@ public class MainActivity extends AppCompatActivity
             // fin de "uso del metodo de verificacion de conexion a internet"
         }
         else{
-            /*Map<String, String> params = new HashMap<String,String>();
+            Map<String, String> params = new HashMap<String,String>();
 
-            WebService ws= new WebService("http://186.46.90.102/appUTEQ/webservices/wsNews.php",
+            WebService ws= new WebService("http://"+objValidaciones.ipAConetarse(this)+objConstante.getWsSliderByEstado(),
                     params, MainActivity.this,
                     MainActivity.this);
-            ws.execute("");*/
+            ws.execute("");
+
+
 
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contenedorFragmentos, new FragmentoNoticias()).commit();
         }
     }
+
+    //////////////MÉTODOS DEL SLIDER//////////
+    @Override
+    public void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        //Aqui se puede poner lo que se quiere abrir o ejecutar al darle clic a un elemento del slider
+        Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+    }
+    //////////FIN DE MÉTODOS DEL SLIDER////////////
 
     @Override
     public void onBackPressed() {
@@ -176,25 +212,50 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-/*
+
    @Override
     public void processFinish(String result) throws JSONException {
 
-        JSONArray objdataarray= new JSONArray (result);
-        ArrayList<Noticias> noticias = Noticias.JsonObjectsBuild(objdataarray);
+       mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
-       // AdaptadorNoticias adaptadornoticias = new AdaptadorNoticias(this, noticias);
+       JSONArray objdataarray= new JSONArray (result);
+       //HashMap<String,String> url_maps=new HashMap<>();
+       for (int i = 0; i < objdataarray.length(); i++) {
+           url_maps.put(objdataarray.getJSONObject(i).getString("titulo"),objdataarray.getJSONObject(i).getString("img"));
+       }
 
-        NoticiaAdapater noticiaAdapater=new NoticiaAdapater(this,noticias);
-        recyclerView.setAdapter(noticiaAdapater);
+       /////////////SLIDER//////////
 
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+            /*url_maps.put("Aqui poner alguna wa", "http://www.uteq.edu.ec/images/slider/slider-01.jpg");
+            url_maps.put("Aqui poner otra wa", "http://www.uteq.edu.ec/images/slider/pp_slider-01.jpg");
+            url_maps.put("Aqui poner una tercer wa", "http://www.uteq.edu.ec/images/slider/correo-01.jpg");*/
 
 
-    }*/
+       for(String name : url_maps.keySet()){
+           TextSliderView textSliderView = new TextSliderView(this);
+           // initialize a SliderLayout
+           textSliderView
+                   .description(name)
+                   .image(objConstante.getUrlImgSlider()+url_maps.get(name))
+                   .setScaleType(BaseSliderView.ScaleType.Fit)
+                   .setOnSliderClickListener(MainActivity.this);
+
+           //add your extra information
+           textSliderView.bundle(new Bundle());
+           textSliderView.getBundle()
+                   .putString("extra",name);
+
+           mDemoSlider.addSlider(textSliderView);
+       }
+
+       //Efecto de transicion: Aqui solo dejar uno de estos, el que mas guste
+       //Como recomendación se podría poner configurable
+       mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+
+       mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+       mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+       mDemoSlider.setDuration(6000);
+       /////////////////FIN SLIDER//////////////////////////////
+
+    }
 }

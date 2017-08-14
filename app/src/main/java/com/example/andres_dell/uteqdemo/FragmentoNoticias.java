@@ -24,9 +24,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
-public class FragmentoNoticias extends Fragment implements Asynchtask {
+public class FragmentoNoticias extends Fragment implements Asynchtask, BaseSliderView.OnSliderClickListener {
 
+
+    SliderLayout mDemoSlider;
+    HashMap<String,String> url_maps=new HashMap<>();
+    MainActivity mainActivity=new MainActivity();
     //////////////////////////////////////
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
@@ -44,15 +52,17 @@ public class FragmentoNoticias extends Fragment implements Asynchtask {
         idTipoNoticia=args.getString("idTipoNoticia");
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
         view=inflater.inflate(R.layout.fragment_fragmento_noticias, container,false);
+
+
+
+        mDemoSlider = (SliderLayout) view.findViewById(R.id.slider);
+
         ////////////////////////////////////
         recyclerView=(RecyclerView)view.findViewById(R.id.rvListNoticiasN);
         linearLayoutManager=new LinearLayoutManager(view.getContext());
@@ -82,6 +92,41 @@ public class FragmentoNoticias extends Fragment implements Asynchtask {
                     params, view.getContext(),
                      FragmentoNoticias.this);
             ws.execute("");
+
+            /////////////SLIDER//////////
+
+            /*url_maps.put("Aqui poner alguna wa", "http://www.uteq.edu.ec/images/slider/slider-01.jpg");
+            url_maps.put("Aqui poner otra wa", "http://www.uteq.edu.ec/images/slider/pp_slider-01.jpg");
+            url_maps.put("Aqui poner una tercer wa", "http://www.uteq.edu.ec/images/slider/correo-01.jpg");*/
+
+            this.url_maps=mainActivity.url_maps;
+            for(String name : url_maps.keySet()){
+                TextSliderView textSliderView = new TextSliderView(view.getContext());
+                // initialize a SliderLayout
+                textSliderView
+                        .description(name)
+                        .image(objConstante.getUrlImgSlider()+url_maps.get(name))
+                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                        .setOnSliderClickListener(this);
+
+                //add your extra information
+                textSliderView.bundle(new Bundle());
+                textSliderView.getBundle()
+                        .putString("extra",name);
+
+                mDemoSlider.addSlider(textSliderView);
+            }
+
+            //Efecto de transicion: Aqui solo dejar uno de estos, el que mas guste
+            //Como recomendación se podría poner configurable
+            mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+
+            mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+            mDemoSlider.setDuration(6000);
+            /////////////////FIN SLIDER//////////////////////////////
+
+
         }
 
 
@@ -114,6 +159,21 @@ public class FragmentoNoticias extends Fragment implements Asynchtask {
     }
 
 
+    //////////////MÉTODOS DEL SLIDER//////////
+    @Override
+    public void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        //Aqui se puede poner lo que se quiere abrir o ejecutar al darle clic a un elemento del slider
+        Toast.makeText(view.getContext(),slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+    }
+    //////////FIN DE MÉTODOS DEL SLIDER////////////
+
     @Override
     public void processFinish(String result) throws JSONException {
         JSONArray objdataarray= new JSONArray (result);
@@ -130,6 +190,7 @@ public class FragmentoNoticias extends Fragment implements Asynchtask {
 
             }
         });
+
 
     }
 }

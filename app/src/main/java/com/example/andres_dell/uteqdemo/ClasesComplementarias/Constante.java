@@ -19,7 +19,9 @@ public class Constante {
     private String urlConsultaNotas="http://sicau.uteq.edu.ec/portal/estudiantes/notas/home.faces";
     private String mensajeSinConexion="Comprueba tu conexión a Internet";
     private String wsUniversidad="/webservice/universidad/";
-    private String urlUteq="http://www.uteq.edu.ec/";
+    private String urlUteq="http://www.uteq.edu.ec";
+    private String urlImgSlider="http://www.uteq.edu.ec/images/slider/";
+    private String wsSliderByEstado="/webservice/slider/estado/1";
 
     public String getIpLocal() {return ipLocal;}
 
@@ -52,4 +54,8 @@ public class Constante {
     public String getUrlIdentidad() {return urlIdentidad;}
 
     public String getUrlUteq() {return urlUteq;}
+
+    public String getUrlImgSlider() {return urlImgSlider;}
+
+    public String getWsSliderByEstado() {return wsSliderByEstado;}
 }

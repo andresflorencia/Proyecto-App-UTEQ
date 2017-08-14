@@ -30,7 +30,7 @@ public class Noticias {
     public Noticias(JSONObject a) throws JSONException {
         idNoticia=a.getString("id");
         titulo =  a.getString("titulo");
-        subtitulo=a.getString("intro").substring(0,120);
+        subtitulo=a.getString("intro");
         fecha=a.get("publicacion").toString().substring(0,10);
        // categoria=a.getString("categoria");
         path=a.getString("url");

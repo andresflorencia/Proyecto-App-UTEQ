@@ -11,13 +11,29 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.andres_dell.uteqdemo.WebServ.Asynchtask;
+import com.example.andres_dell.uteqdemo.WebServ.WebService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by ANDRES-DELL on 06/08/2017.
  */
-public class Validaciones {
+public class Validaciones implements Asynchtask {
 
 
-   // public static WebView webview;
+    private HashMap<String,String> datos=new HashMap<String, String>();
+
+    public HashMap<String, String> getDatos() {return datos;}
+
+    public void setDatos(HashMap<String, String> datos) {this.datos = datos;}
+
+    // public static WebView webview;
     //metodo verficar conexion a internet
     public static boolean verificaConexion(Context ctx) {
         boolean bConectado = false;
@@ -54,8 +70,30 @@ public class Validaciones {
         Constante constante=new Constante();
         String ssid=ssid(ctx);
         String ipRetorno=constante.getIpPublica();
-        if (ssid!=null && ssid != ""&&(ssid=="Comedor Universitario" || ssid=="TOALA_CNT"||ssid=="lidertics1"||ssid=="Wifi_UTEQ"||ssid=="Docentes"))
+        if (ssid!=null && ssid != ""&&(ssid=="Comedor Universitario"||ssid=="lidertics1"||ssid=="Wifi_UTEQ"||ssid=="Docentes"))
             ipRetorno=constante.getIpLocal();
         return ipRetorno;
+    }
+
+
+    public void EjecutarWebService(String url, View view){
+
+
+        Map<String, String> paramsS = new HashMap<String,String>();
+        WebService wsS= new WebService(url,
+                paramsS, view.getContext(),
+                (Asynchtask) view.getContext());
+        wsS.execute("");
+    }
+
+    @Override
+    public void processFinish(String result) throws JSONException {
+
+        JSONArray objdataarray= new JSONArray (result);
+
+        for (int i = 0; i < objdataarray.length(); i++) {
+            this.datos.put(objdataarray.getJSONObject(i).getString("titulo"),objdataarray.getJSONObject(i).getString("img"));
+        }
+
     }
 }
