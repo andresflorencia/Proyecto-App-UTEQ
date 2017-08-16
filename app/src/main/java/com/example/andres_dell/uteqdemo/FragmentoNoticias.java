@@ -35,6 +35,7 @@ public class FragmentoNoticias extends Fragment implements Asynchtask, BaseSlide
     SliderLayout mDemoSlider;
     HashMap<String,String> url_maps=new HashMap<>();
     MainActivity mainActivity=new MainActivity();
+    Bundle bundleSlid=new Bundle();
     //////////////////////////////////////
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
@@ -50,6 +51,7 @@ public class FragmentoNoticias extends Fragment implements Asynchtask, BaseSlide
     public void setArguments(Bundle args) {
         super.setArguments(args);
         idTipoNoticia=args.getString("idTipoNoticia");
+        bundleSlid=args.getBundle("bundleSlider");
     }
 
     @Override
@@ -99,13 +101,12 @@ public class FragmentoNoticias extends Fragment implements Asynchtask, BaseSlide
             url_maps.put("Aqui poner otra wa", "http://www.uteq.edu.ec/images/slider/pp_slider-01.jpg");
             url_maps.put("Aqui poner una tercer wa", "http://www.uteq.edu.ec/images/slider/correo-01.jpg");*/
 
-            this.url_maps=mainActivity.url_maps;
-            for(String name : url_maps.keySet()){
+            for(String name : bundleSlid.keySet()){
                 TextSliderView textSliderView = new TextSliderView(view.getContext());
                 // initialize a SliderLayout
                 textSliderView
                         .description(name)
-                        .image(objConstante.getUrlImgSlider()+url_maps.get(name))
+                        .image(objConstante.getUrlImgSlider()+bundleSlid.get(name))
                         .setScaleType(BaseSliderView.ScaleType.Fit)
                         .setOnSliderClickListener(this);
 

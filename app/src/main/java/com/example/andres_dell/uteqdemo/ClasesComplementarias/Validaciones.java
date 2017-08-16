@@ -68,10 +68,17 @@ public class Validaciones implements Asynchtask {
     }
     public static String ipAConetarse(Context ctx){
         Constante constante=new Constante();
-        String ssid=ssid(ctx);
-        String ipRetorno=constante.getIpPublica();
-        if (ssid!=null && ssid != ""&&(ssid=="Comedor Universitario"||ssid=="lidertics1"||ssid=="Wifi_UTEQ"||ssid=="Docentes"))
-            ipRetorno=constante.getIpLocal();
+        String ssid= ssid(ctx);
+        ssid=ssid.substring(1,ssid.length()-1);
+        String ipRetorno="";
+
+        if (ssid.equals("Comedor Universitario")||ssid=="lidertics1"||ssid=="Wifi_UTEQ"||ssid=="Docentes")
+        {
+            ipRetorno="10.1.1.5";
+        }
+        else{
+            ipRetorno=constante.getIpPublica();
+        }
         return ipRetorno;
     }
 

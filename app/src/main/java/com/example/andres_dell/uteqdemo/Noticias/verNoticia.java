@@ -1,6 +1,7 @@
 package com.example.andres_dell.uteqdemo.Noticias;
 
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -29,10 +30,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 public class verNoticia extends AppCompatActivity implements Asynchtask {
 
     Constante objConstante=new Constante();
     Validaciones objValidaciones=new Validaciones();
+    String urlUteq;
+    String idNoti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +77,7 @@ public class verNoticia extends AppCompatActivity implements Asynchtask {
         JSONObject jsonObj= objdataarray.getJSONObject(0);
 
         //Extrayendo datos del JSON e insertando en cada campo
-        TextView txttituloNoticia = (TextView)findViewById(R.id.txtTitulo);
+        final TextView txttituloNoticia = (TextView)findViewById(R.id.txtTitulo);
         txttituloNoticia.setText(Html.fromHtml(jsonObj.getString("titulo")));
 
         TextView txtFechaCategoria = (TextView)findViewById(R.id.txtFechaCategoria);
@@ -85,8 +90,8 @@ public class verNoticia extends AppCompatActivity implements Asynchtask {
         txtContenido.setText(Html.fromHtml(jsonObj.getString("texto")));
 
         //cargar la imagen para cada noticia
-        String urlUteq=objConstante.getUrlUteq();
-        String idNoti=jsonObj.getString("url");
+        urlUteq=objConstante.getUrlUteq();
+        idNoti=jsonObj.getString("url");
         ImageView imgNoticia=(ImageView)findViewById(R.id.imgNoti);
         Glide.with(this)
                 .load(urlUteq.concat(idNoti))
@@ -94,18 +99,34 @@ public class verNoticia extends AppCompatActivity implements Asynchtask {
                 .error(R.drawable.logouteqminres)
                 .into(imgNoticia);
 
-        Bundle b = new Bundle();
-        b.putString("url",urlUteq.concat(idNoti));
-        b.putString("titulo",jsonObj.getString("titulo"));
 
-        final DialogFragment dialogFragment= new Fragmento_Dialogo();
-        dialogFragment.setArguments(b);
+
+
+        /*PhotoViewAttacher photoView=new PhotoViewAttacher(imgNoticia);
+        photoView.update();*/
+
+        /*final DialogFragment dialogFragment= new Fragmento_Dialogo();
+        dialogFragment.setArguments(b);*/
 
 
         imgNoticia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogFragment.show(getSupportFragmentManager(), "Fragmento_Dialogo");
+                FragmentManager fragmentManager=getSupportFragmentManager();
+
+                DialogFragment fragment =(DialogFragment) fragmentManager.findFragmentByTag(Fragmento_Dialogo.TAG);
+
+                if(fragment==null){
+                    fragment=new Fragmento_Dialogo();
+                    Bundle b = new Bundle();
+                    b.putString("url",urlUteq.concat(idNoti));
+                    b.putString("titulo",txttituloNoticia.getText().toString());
+                    fragment.setArguments(b);
+                }
+
+                //DialogFragment dialogFragment= new Fragmento_Dialogo();
+
+                fragment.show(getSupportFragmentManager(), Fragmento_Dialogo.TAG);
             }
         });
     }

@@ -33,6 +33,8 @@ import com.example.andres_dell.uteqdemo.R;
 
 import java.util.List;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 /**
  * Created by ANDRES-DELL on 01/08/2017.
  */
@@ -73,6 +75,7 @@ public class NoticiaAdapater extends RecyclerView.Adapter<NoticiaAdapater.ViewHo
                 .crossFade()
                 .error(R.drawable.logouteqminres)
                 .into(holder.imgNoticia);
+
     }
 
     @Override

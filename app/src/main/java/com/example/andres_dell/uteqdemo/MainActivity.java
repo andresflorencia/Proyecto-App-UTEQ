@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BaseSliderView.OnSliderClickListener, Asynchtask {
 
     private SliderLayout mDemoSlider;
-    public final HashMap<String,String> url_maps=new HashMap<>();
+    public HashMap<String,String> url_maps=new HashMap<>();
+
+    public Bundle bundleSlider=new Bundle();
 
     /////////////////////////////////////
     RecyclerView recyclerView;
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         /*/////////////////////////////////
         recyclerView=(RecyclerView)findViewById(R.id.rvListNoticias);
@@ -164,6 +165,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_noticias) {
             Bundle b = new Bundle();
             b.putString("idTipoNoticia","Noticias");
+            b.putBundle("bundleSlider",bundleSlider);
             FragmentoNoticias fragmentoNoticias=new FragmentoNoticias();
             fragmentoNoticias.setArguments(b);
             fragmentManager.beginTransaction().replace(R.id.contenedorFragmentos, fragmentoNoticias).commit();
@@ -176,12 +178,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_investigacion) {
             Bundle b = new Bundle();
             b.putString("idTipoNoticia","Investigacion");
+            b.putBundle("bundleSlider",bundleSlider);
             FragmentoNoticias fragmentoNoticias=new FragmentoNoticias();
             fragmentoNoticias.setArguments(b);
             fragmentManager.beginTransaction().replace(R.id.contenedorFragmentos, fragmentoNoticias).commit();
         }  else if (id == R.id.nav_vinculacion) {
             Bundle b = new Bundle();
             b.putString("idTipoNoticia","Vinculacion");
+            b.putBundle("bundleSlider",bundleSlider);
             FragmentoNoticias fragmentoNoticias=new FragmentoNoticias();
             fragmentoNoticias.setArguments(b);
             fragmentManager.beginTransaction().replace(R.id.contenedorFragmentos, fragmentoNoticias).commit();
@@ -221,7 +225,7 @@ public class MainActivity extends AppCompatActivity
        JSONArray objdataarray= new JSONArray (result);
        //HashMap<String,String> url_maps=new HashMap<>();
        for (int i = 0; i < objdataarray.length(); i++) {
-           url_maps.put(objdataarray.getJSONObject(i).getString("titulo"),objdataarray.getJSONObject(i).getString("img"));
+           bundleSlider.putString(objdataarray.getJSONObject(i).getString("titulo"),objdataarray.getJSONObject(i).getString("img"));
        }
 
        /////////////SLIDER//////////
@@ -231,12 +235,12 @@ public class MainActivity extends AppCompatActivity
             url_maps.put("Aqui poner una tercer wa", "http://www.uteq.edu.ec/images/slider/correo-01.jpg");*/
 
 
-       for(String name : url_maps.keySet()){
+       for(String name : bundleSlider.keySet()){
            TextSliderView textSliderView = new TextSliderView(this);
            // initialize a SliderLayout
            textSliderView
                    .description(name)
-                   .image(objConstante.getUrlImgSlider()+url_maps.get(name))
+                   .image(objConstante.getUrlImgSlider()+bundleSlider.get(name))
                    .setScaleType(BaseSliderView.ScaleType.Fit)
                    .setOnSliderClickListener(MainActivity.this);
 
