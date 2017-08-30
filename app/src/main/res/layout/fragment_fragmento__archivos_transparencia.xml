@@ -2,13 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.andres_dell.uteqdemo.Fragmento_Investigacion">
+    tools:context="com.example.andres_dell.uteqdemo.Fragmento_ArchivosTransparencia">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <ExpandableListView
-        android:id="@+id/lvExp"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ExpandableListView>
+        android:layout_height="match_parent"
+        android:id="@+id/lstArchivosTransparencia" />
 
 </FrameLayout>

@@ -16,7 +16,8 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/txtArchivo"
             android:layout_alignParentStart="true"
-            android:id="@+id/lyCategoriasA">
+            android:id="@+id/lyCategoriasA"
+            >
 
             <ListView
                 android:layout_width="match_parent"

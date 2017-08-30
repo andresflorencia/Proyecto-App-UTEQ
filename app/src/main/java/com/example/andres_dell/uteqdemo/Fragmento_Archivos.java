@@ -17,6 +17,9 @@ import com.example.andres_dell.uteqdemo.Archivos.Archivos;
 import com.example.andres_dell.uteqdemo.ClasesComplementarias.Constante;
 import com.example.andres_dell.uteqdemo.ClasesComplementarias.Validaciones;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Fragmento_Archivos extends Fragment {
     Validaciones objValidaciones=new Validaciones();
@@ -41,7 +44,12 @@ public class Fragmento_Archivos extends Fragment {
                 "Responsable de la Información","Procesos Contractuales"
         };
 
-        adp2=new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, datos);
+        List<String> d= new ArrayList<>();
+        for(int i=0;i<=10;i++){
+            d.add(String.valueOf(i));
+        }
+
+        adp2=new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, d);
 
         try {
             //uso del metodo de verificacion de conexion a internet

@@ -22,6 +22,7 @@ public class Constante {
     private String urlUteq="http://www.uteq.edu.ec";
     private String urlImgSlider="http://www.uteq.edu.ec/images/slider/";
     private String wsSliderByEstado="/webservice/slider/estado/1";
+    private static final String urlArchivoLotaip="http://www.uteq.edu.ec/lotaip/lotaip/pdf/";
 
     public String getIpLocal() {return ipLocal;}
 
